@@ -14,7 +14,18 @@ function get_help()
 
 }
 
-if [[ $1 == -h || $1 == --help ]]
+
+function transfer()
+{
+    echo massage
+}
+
+if [[ $EUID -ne 0  ]]
+then
+    echo "This program must be run with root/sudo privileges"
+    get_help
+
+elif [[ $1 == -h || $1 == --help ]]
 then
    get_help 
 
@@ -24,7 +35,8 @@ then
 
 elif [[ $1 == -t || $1 == --transfer ]]
 then
-    echo yup
+  mount -L "Kindle" --mkdir /mnt/kindle/
+
 else
     echo "ERROR $1 not a valid command"
     get_help

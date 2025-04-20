@@ -1,8 +1,10 @@
 #!/bin/bash
 
-function get_help()
-{   
-    echo "NOSE1, a simple cli app to transfer books to a kindle paperwhite"
+
+function get_help() {
+
+    figlet nstk
+    echo "nstk, a simple cli app to transfer books to a kindle paperwhite"
     echo "usage $0 [options]"
     echo
     echo "options:"
@@ -17,13 +19,18 @@ function get_help()
 
 function transfer()
 {
-    echo massage
+    mount -L "Kindle" --mkdir /mnt/kindle
+    wait 1
+    echo transferring files to kindle...
+
 }
 
 if [[ $EUID -ne 0  ]]
 then
-    echo "This program must be run with root/sudo privileges"
     get_help
+    echo "This program must be run with root/sudo privileges"
+    exit
+
 
 elif [[ $1 == -h || $1 == --help ]]
 then
@@ -35,7 +42,7 @@ then
 
 elif [[ $1 == -t || $1 == --transfer ]]
 then
-  mount -L "Kindle" --mkdir /mnt/kindle/
+transfer
 
 else
     echo "ERROR $1 not a valid command"
